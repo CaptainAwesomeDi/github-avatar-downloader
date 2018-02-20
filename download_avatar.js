@@ -17,7 +17,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
       url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
       headers: {
         'user-agent': 'request',
-        'Authorization':process.env.GITHUB_TOKEN
+        'Authorization':"token"+ process.env.GITHUB_TOKEN
       }
     }
 
@@ -27,7 +27,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   }
 }
 
-//Invoke main function with Callback function for main function
+//Invoke main function with Callback function
 //passes list of URL to downloadImageByURL
 getRepoContributors(owner, repo, (err, result) => {
   for (var i = 0; i < result.length; i++) {
