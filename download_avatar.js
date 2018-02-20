@@ -1,5 +1,7 @@
 var request = require("request");
 var fs = require("fs");
+require('dotenv').config();
+
 var owner = process.argv[2];
 var repo = process.argv[3];
 
@@ -14,7 +16,8 @@ function getRepoContributors(repoOwner, repoName, cb) {
     let options = {
       url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
       headers: {
-        'user-agent': 'request'
+        'user-agent': 'request',
+        'Authorization':process.env.GITHUB_TOKEN
       }
     }
 
@@ -27,7 +30,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
 //Invoke main function with Callback function for main function
 //passes list of URL to downloadImageByURL
 getRepoContributors(owner, repo, (err, result) => {
-  console.log("Errors:", err);
   for (var i = 0; i < result.length; i++) {
     console.log(result[i].avatar_url);
     downloadImageByURL(result[i].avatar_url, './avatars/' + result[i].login + '.jpg');
